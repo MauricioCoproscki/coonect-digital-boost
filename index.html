@@ -22,12 +22,582 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            },
+            colors: {
+              'coonect-red': {
+                DEFAULT: '#C5282F',
+                light: '#E53E43',
+                dark: '#A41E22',
+              },
+              'coonect-orange': {
+                DEFAULT: '#FF6900',
+                light: '#FF8533',
+                dark: '#CC5400',
+              },
+              'coonect-bright-red': {
+                DEFAULT: '#ED1C24',
+              }
+            },
+            keyframes: {
+              'fade-in': {
+                '0%': {
+                  opacity: '0',
+                  transform: 'translateY(10px)'
+                },
+                '100%': {
+                  opacity: '1',
+                  transform: 'translateY(0)'
+                }
+              },
+              'slide-in-right': {
+                '0%': { transform: 'translateX(100%)' },
+                '100%': { transform: 'translateX(0)' }
+              }
+            },
+            animation: {
+              'fade-in': 'fade-in 0.3s ease-out',
+              'slide-in-right': 'slide-in-right 0.3s ease-out'
+            }
+          }
+        }
+      }
+    </script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <style>
+      .gradient-text {
+        background: linear-gradient(135deg, #FF6900, #C5282F);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      
+      .bg-dot-pattern {
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      }
+    </style>
   </head>
 
-  <body>
-    <div id="root"></div>
-    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
-    <script type="module" src="/src/main.tsx"></script>
+  <body class="font-sans bg-white text-gray-900">
+    <!-- Top Bar -->
+    <div class="bg-gray-900 text-white py-2 px-4">
+      <div class="container mx-auto flex justify-between items-center text-sm">
+        <div class="flex items-center space-x-4">
+          <div class="flex items-center space-x-1">
+            <i data-lucide="phone" class="w-4 h-4"></i>
+            <span>(51) 3333-4444</span>
+          </div>
+          <div class="flex items-center space-x-1">
+            <i data-lucide="mail" class="w-4 h-4"></i>
+            <span>contato@coonect.com.br</span>
+          </div>
+        </div>
+        <div class="text-xs">
+          <span class="text-orange-400">Agente Autorizado</span> Claro Empresas
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+      <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between h-16">
+          <!-- Logo -->
+          <div class="flex items-center">
+            <div class="text-2xl font-bold">
+              <span class="text-red-600">Coonect</span>
+              <span class="text-gray-900"> Ltda.</span>
+            </div>
+          </div>
+
+          <!-- Desktop Navigation -->
+          <nav class="hidden md:flex items-center space-x-8">
+            <a href="#inicio" class="text-gray-700 hover:text-orange-500 font-medium transition-colors">
+              Início
+            </a>
+            <a href="#sobre" class="text-gray-700 hover:text-orange-500 font-medium transition-colors">
+              Sobre Nós
+            </a>
+            <a href="#solucoes" class="text-gray-700 hover:text-orange-500 font-medium transition-colors">
+              Soluções
+            </a>
+            <a href="#diferenciais" class="text-gray-700 hover:text-orange-500 font-medium transition-colors">
+              Por que Coonect?
+            </a>
+            <a href="#contato" class="text-gray-700 hover:text-orange-500 font-medium transition-colors">
+              Contato
+            </a>
+          </nav>
+
+          <!-- CTA Button -->
+          <div class="hidden md:block">
+            <button class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-semibold transition-colors">
+              Fale com um Especialista
+            </button>
+          </div>
+
+          <!-- Mobile Menu Button -->
+          <button class="md:hidden p-2" id="mobile-menu-btn">
+            <i data-lucide="menu" class="w-6 h-6" id="menu-icon"></i>
+            <i data-lucide="x" class="w-6 h-6 hidden" id="close-icon"></i>
+          </button>
+        </div>
+
+        <!-- Mobile Navigation -->
+        <div class="md:hidden py-4 border-t hidden" id="mobile-menu">
+          <nav class="flex flex-col space-y-4">
+            <a href="#inicio" class="text-gray-700 hover:text-orange-500 font-medium">
+              Início
+            </a>
+            <a href="#sobre" class="text-gray-700 hover:text-orange-500 font-medium">
+              Sobre Nós
+            </a>
+            <a href="#solucoes" class="text-gray-700 hover:text-orange-500 font-medium">
+              Soluções
+            </a>
+            <a href="#diferenciais" class="text-gray-700 hover:text-orange-500 font-medium">
+              Por que Coonect?
+            </a>
+            <a href="#contato" class="text-gray-700 hover:text-orange-500 font-medium">
+              Contato
+            </a>
+            <button class="bg-orange-500 hover:bg-orange-600 text-white w-full py-2 rounded-lg font-semibold mt-4">
+              Fale com um Especialista
+            </button>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero Section -->
+      <section id="inicio" class="relative bg-gradient-to-br from-gray-900 via-red-900 to-orange-900 text-white overflow-hidden">
+        <div class="absolute inset-0 bg-black opacity-50"></div>
+        <div class="absolute inset-0 bg-dot-pattern"></div>
+
+        <div class="relative container mx-auto px-4 py-20 lg:py-28">
+          <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <!-- Content -->
+            <div class="space-y-8">
+              <div class="space-y-4">
+                <div class="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 text-sm">
+                  <i data-lucide="zap" class="w-4 h-4 text-orange-400"></i>
+                  <span>Agente Autorizado Claro Empresas</span>
+                </div>
+                
+                <h1 class="text-4xl lg:text-6xl font-bold leading-tight">
+                  <span class="text-orange-400">Soluções digitais</span><br />
+                  que <span class="text-white">transformam</span><br />
+                  <span class="text-red-300">negócios.</span>
+                </h1>
+                
+                <p class="text-xl lg:text-2xl text-gray-300 leading-relaxed">
+                  Sua PME conectada à inovação com a força da Claro e nossa expertise local.
+                </p>
+              </div>
+
+              <div class="flex flex-col sm:flex-row gap-4">
+                <button class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 text-lg font-semibold rounded-lg transition-all hover:scale-105 flex items-center justify-center">
+                  Descubra como Transformar seu Negócio
+                  <i data-lucide="arrow-right" class="ml-2 w-5 h-5"></i>
+                </button>
+                <button class="border border-white text-white hover:bg-white hover:text-gray-900 px-8 py-4 text-lg font-semibold rounded-lg transition-colors">
+                  Solicite um Diagnóstico
+                </button>
+              </div>
+
+              <!-- Stats -->
+              <div class="grid grid-cols-3 gap-6 pt-8 border-t border-white/20">
+                <div class="text-center">
+                  <div class="text-2xl lg:text-3xl font-bold text-orange-400">+25</div>
+                  <div class="text-sm text-gray-300">Anos Experiência</div>
+                </div>
+                <div class="text-center">
+                  <div class="text-2xl lg:text-3xl font-bold text-orange-400">100%</div>
+                  <div class="text-sm text-gray-300">Foco em PMEs</div>
+                </div>
+                <div class="text-center">
+                  <div class="text-2xl lg:text-3xl font-bold text-orange-400">RS/SC/PR</div>
+                  <div class="text-sm text-gray-300">Região Sul</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Image -->
+            <div class="relative">
+              <div class="relative z-10">
+                <img
+                  src="public/lovable-uploads/17d1daff-699f-48c3-9635-1c05e3bc492c.png"
+                  alt="Empresários usando tecnologia para transformar negócios"
+                  class="rounded-lg shadow-2xl w-full"
+                />
+              </div>
+              <div class="absolute -top-6 -right-6 w-72 h-72 bg-orange-500/20 rounded-full blur-3xl"></div>
+              <div class="absolute -bottom-6 -left-6 w-72 h-72 bg-red-500/20 rounded-full blur-3xl"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- About Section -->
+      <section id="sobre" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+          <div class="grid lg:grid-cols-2 gap-16 items-center mb-20">
+            <!-- Content -->
+            <div class="space-y-8">
+              <div>
+                <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+                  Sobre a <span class="text-orange-500">Coonect</span>
+                </h2>
+                <p class="text-xl text-gray-600 leading-relaxed">
+                  Fundada em 03 de fevereiro de 2025, somos uma empresa jovem construída sobre 
+                  pilares de vasta experiência. Nossa liderança combina mais de 25 anos de 
+                  expertise em telecomunicações, tecnologia e operações B2B.
+                </p>
+              </div>
+
+              <div class="space-y-6">
+                <div>
+                  <h3 class="text-lg font-semibold text-gray-900 mb-2 flex items-center">
+                    <i data-lucide="target" class="w-5 h-5 text-orange-500 mr-2"></i>
+                    Nossa Missão
+                  </h3>
+                  <p class="text-gray-600">
+                    Simplificar o acesso à tecnologia e aplicá-la com expertise para impulsionar 
+                    o crescimento sustentável de Pequenas e Médias Empresas Brasileiras.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 class="text-lg font-semibold text-gray-900 mb-2 flex items-center">
+                    <i data-lucide="eye" class="w-5 h-5 text-orange-500 mr-2"></i>
+                    Nossa Visão
+                  </h3>
+                  <p class="text-gray-600">
+                    Ser a empresa que ajuda a redefinir o futuro das PMEs no Brasil, 
+                    revolucionando seus negócios com tecnologia de alta qualidade.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Image -->
+            <div class="relative">
+              <img
+                src="public/lovable-uploads/64035013-ec14-431f-a00e-bed24c6b1036.png"
+                alt="Empreendedora usando tablet em ambiente moderno"
+                class="rounded-lg shadow-xl w-full"
+              />
+              <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-orange-500/20 rounded-full blur-2xl"></div>
+            </div>
+          </div>
+
+          <!-- Values -->
+          <div class="mb-20">
+            <h3 class="text-3xl font-bold text-center text-gray-900 mb-12">
+              Nossos <span class="text-orange-500">Valores</span>
+            </h3>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8" id="values-grid">
+              <!-- Values will be populated by JavaScript -->
+            </div>
+          </div>
+
+          <!-- Purpose -->
+          <div class="bg-gradient-to-r from-red-600 to-orange-600 rounded-xl p-8 lg:p-12 text-white text-center">
+            <h3 class="text-3xl font-bold mb-6">Nosso Propósito</h3>
+            <p class="text-lg leading-relaxed max-w-4xl mx-auto">
+              Acreditamos que o potencial das PMEs é imenso e que a tecnologia deve ser uma aliada 
+              poderosa, não uma barreira. Nosso propósito é empoderar esses empreendedores, 
+              simplificando o acesso às melhores ferramentas e oferecendo a parceria e expertise 
+              local que eles merecem para prosperar e inovar.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Solutions Section -->
+      <section id="solucoes" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+          <div class="text-center mb-16">
+            <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+              Soluções que <span class="text-orange-500">Transformam</span>
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+              Oferecemos um portfólio completo de soluções digitais da Claro Empresas, 
+              com o diferencial do atendimento consultivo e expertise local da Coonect.
+            </p>
+          </div>
+
+          <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8" id="solutions-grid">
+            <!-- Solutions will be populated by JavaScript -->
+          </div>
+
+          <div class="text-center mt-12">
+            <p class="text-lg text-gray-700 mb-6">
+              Precisa de uma solução específica? Nossa equipe está pronta para criar a combinação perfeita para seu negócio.
+            </p>
+            <button class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors">
+              Solicite uma Consultoria Personalizada
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Differentials Section -->
+      <section id="diferenciais" class="py-20 bg-gray-900 text-white">
+        <div class="container mx-auto px-4">
+          <div class="text-center mb-16">
+            <h2 class="text-4xl lg:text-5xl font-bold mb-6">
+              Por que escolher a <span class="text-orange-400">Coonect?</span>
+            </h2>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+              Somos seu parceiro na transformação digital. Combinamos a força das soluções Claro 
+              com o atendimento personalizado e a expertise local que sua PME merece.
+            </p>
+          </div>
+
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16" id="differentials-grid">
+            <!-- Differentials will be populated by JavaScript -->
+          </div>
+
+          <!-- Bottom CTA -->
+          <div class="text-center bg-gradient-to-r from-orange-500 to-red-500 rounded-xl p-8 lg:p-12">
+            <h3 class="text-3xl font-bold mb-4">Pronto para Transformar seu Negócio?</h3>
+            <p class="text-lg mb-8 opacity-90">
+              Nossa equipe está preparada para entender suas necessidades e criar a solução perfeita para sua empresa.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+              <button class="bg-white text-orange-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors">
+                Fale com um Especialista em Transformação Digital
+              </button>
+              <button class="border border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-orange-600 transition-colors">
+                Solicite um Diagnóstico para sua Empresa
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section id="contato" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+          <div class="text-center mb-16">
+            <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+              Inicie a <span class="text-orange-500">Transformação</span> do seu Negócio
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+              Entre em contato conosco e descubra como podemos ajudar sua empresa a alcançar 
+              todo seu potencial através da tecnologia.
+            </p>
+          </div>
+
+          <div class="grid lg:grid-cols-3 gap-8">
+            <!-- Contact Info -->
+            <div class="space-y-6" id="contact-info">
+              <!-- Contact cards will be populated by JavaScript -->
+            </div>
+
+            <!-- Contact Form -->
+            <div class="lg:col-span-2">
+              <div class="bg-white border-0 shadow-xl rounded-lg">
+                <div class="p-8">
+                  <h3 class="text-2xl font-bold text-gray-900 mb-6">
+                    Fale com um Especialista
+                  </h3>
+                  
+                  <form id="contact-form" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                          Nome *
+                        </label>
+                        <input
+                          type="text"
+                          name="nome"
+                          placeholder="Seu nome completo"
+                          required
+                          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                        />
+                      </div>
+                      <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                          Empresa *
+                        </label>
+                        <input
+                          type="text"
+                          name="empresa"
+                          placeholder="Nome da sua empresa"
+                          required
+                          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                          E-mail *
+                        </label>
+                        <input
+                          type="email"
+                          name="email"
+                          placeholder="seu@email.com"
+                          required
+                          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                        />
+                      </div>
+                      <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                          Telefone *
+                        </label>
+                        <input
+                          type="tel"
+                          name="telefone"
+                          placeholder="(11) 99999-9999"
+                          required
+                          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-2">
+                        Mensagem
+                      </label>
+                      <textarea
+                        name="mensagem"
+                        placeholder="Conte-nos sobre suas necessidades e como podemos ajudar a transformar seu negócio..."
+                        rows="4"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                      ></textarea>
+                    </div>
+
+                    <button 
+                      type="submit" 
+                      class="w-full bg-orange-500 hover:bg-orange-600 text-white py-4 text-lg font-semibold rounded-md transition-colors flex items-center justify-center"
+                    >
+                      <i data-lucide="send" class="w-5 h-5 mr-2"></i>
+                      Enviar Mensagem
+                    </button>
+                  </form>
+
+                  <p class="text-sm text-gray-600 mt-4 text-center">
+                    Ao enviar este formulário, você concorda com nossa política de privacidade 
+                    e autoriza o contato da Coonect.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white">
+      <div class="container mx-auto px-4 py-12">
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <!-- Company Info -->
+          <div class="space-y-4">
+            <div>
+              <h3 class="text-2xl font-bold mb-2">
+                <span class="text-red-500">Coonect</span> Ltda.
+              </h3>
+              <p class="text-orange-400 text-sm font-medium">
+                Agente Autorizado Claro Empresas
+              </p>
+            </div>
+            <p class="text-gray-300 text-sm leading-relaxed">
+              Soluções digitais que transformam negócios. Conectando PMEs brasileiras 
+              à inovação tecnológica com expertise local e atendimento personalizado.
+            </p>
+          </div>
+
+          <!-- Quick Links -->
+          <div>
+            <h4 class="font-semibold mb-4 text-orange-400">Navegação</h4>
+            <ul class="space-y-2 text-sm">
+              <li><a href="#inicio" class="text-gray-300 hover:text-orange-400 transition-colors">Início</a></li>
+              <li><a href="#sobre" class="text-gray-300 hover:text-orange-400 transition-colors">Sobre Nós</a></li>
+              <li><a href="#solucoes" class="text-gray-300 hover:text-orange-400 transition-colors">Soluções</a></li>
+              <li><a href="#diferenciais" class="text-gray-300 hover:text-orange-400 transition-colors">Por que Coonect?</a></li>
+              <li><a href="#contato" class="text-gray-300 hover:text-orange-400 transition-colors">Contato</a></li>
+            </ul>
+          </div>
+
+          <!-- Solutions -->
+          <div>
+            <h4 class="font-semibold mb-4 text-orange-400">Nossas Soluções</h4>
+            <ul class="space-y-2 text-sm">
+              <li><span class="text-gray-300">Conectividade Empresarial</span></li>
+              <li><span class="text-gray-300">Comunicação Integrada</span></li>
+              <li><span class="text-gray-300">Presença Digital</span></li>
+              <li><span class="text-gray-300">Produtividade e Colaboração</span></li>
+              <li><span class="text-gray-300">Gestão e Segurança</span></li>
+            </ul>
+          </div>
+
+          <!-- Contact Info -->
+          <div>
+            <h4 class="font-semibold mb-4 text-orange-400">Contato</h4>
+            <div class="space-y-3 text-sm">
+              <div class="flex items-center space-x-2">
+                <i data-lucide="phone" class="w-4 h-4 text-orange-400"></i>
+                <span class="text-gray-300">(51) 3333-4444</span>
+              </div>
+              <div class="flex items-center space-x-2">
+                <i data-lucide="mail" class="w-4 h-4 text-orange-400"></i>
+                <span class="text-gray-300">contato@coonect.com.br</span>
+              </div>
+              <div class="flex items-center space-x-2">
+                <i data-lucide="map-pin" class="w-4 h-4 text-orange-400"></i>
+                <span class="text-gray-300">Porto Alegre, RS</span>
+              </div>
+            </div>
+
+            <!-- Social Links -->
+            <div class="flex space-x-4 mt-6">
+              <a href="#" class="bg-gray-800 p-2 rounded-lg hover:bg-orange-500 transition-colors">
+                <i data-lucide="linkedin" class="w-5 h-5"></i>
+              </a>
+              <a href="#" class="bg-gray-800 p-2 rounded-lg hover:bg-orange-500 transition-colors">
+                <i data-lucide="instagram" class="w-5 h-5"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Bar -->
+        <div class="border-t border-gray-800 mt-12 pt-8">
+          <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <div class="text-sm text-gray-400">
+              © 2025 Coonect Ltda. Todos os direitos reservados.
+            </div>
+            <div class="flex space-x-6 text-sm">
+              <a href="#" class="text-gray-400 hover:text-orange-400 transition-colors">
+                Política de Privacidade
+              </a>
+              <a href="#" class="text-gray-400 hover:text-orange-400 transition-colors">
+                Termos de Uso
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/main.js"></script>
   </body>
 </html>
