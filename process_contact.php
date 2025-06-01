@@ -1,7 +1,7 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+ini_set('display_errors', 0);
+ini_set('display_startup_errors', 0);
+error_reporting(0);
 
 require 'vendor/autoload.php';
 
@@ -23,7 +23,7 @@ try {
     $mail->CharSet    = 'UTF-8';
 
     // Adiciona debug para ajudar na identificação de problemas
-    $mail->SMTPDebug = 2; // Habilita debug detalhado
+    $mail->SMTPDebug = 0; // Habilita debug detalhado
 
     // Remetente e destinatário
     $mail->setFrom('mauricio@coonect.com.br', 'Site Coonect');
