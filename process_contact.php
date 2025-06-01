@@ -16,12 +16,16 @@ $mail = new PHPMailer(true);
 try {
     // Configurações do servidor
     $mail->isSMTP();
-    $mail->Host       = 'smtp.google.com'; // Servidor SMTP da Hostinger (ou seu)
+    $mail->Host       = 'smtp.gmail.com'; // Servidor SMTP do Gmail
     $mail->SMTPAuth   = true;
     $mail->Username   = 'mauricio@coonect.com.br'; // Seu e-mail
-    $mail->Password   = 'M@uricio1988'; // Sua senha do e-mail
-    $mail->SMTPSecure = 'tls';
+    $mail->Password   = 'M@uricio1988'; // Sua senha de aplicativo do Gmail
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port       = 587;
+    $mail->CharSet    = 'UTF-8';
+
+    // Adiciona debug para ajudar na identificação de problemas
+    $mail->SMTPDebug = 2; // Habilita debug detalhado
 
     // Remetente e destinatário
     $mail->setFrom('mauricio@coonect.com.br', 'Site Coonect');
