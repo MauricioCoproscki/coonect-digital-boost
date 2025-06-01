@@ -1,7 +1,7 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+ini_set('display_errors', 0);
+ini_set('display_startup_errors', 0);
+error_reporting(0);
 
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -52,7 +52,8 @@ try {
 } catch (Exception $e) {
     echo json_encode([
         'success' => false,
-        'message' => "Erro ao enviar mensagem: {$mail->ErrorInfo}"
+        'message' => "Erro ao enviar mensagem: {$mail->ErrorInfo}",
+        'php_error' => $e->getMessage()
     ]);
 }
 ?>
