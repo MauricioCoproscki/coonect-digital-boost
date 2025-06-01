@@ -123,13 +123,13 @@ const contactInfo = [
   {
     icon: "phone",
     title: "Telefone",
-    content: "(51) 3333-4444",
+    content: "(51) 99443-2288",
     subtitle: "WhatsApp Business disponível"
   },
   {
     icon: "mail",
     title: "E-mail",
-    content: "contato@coonect.com.br",
+    content: "<a href='mailto:contato@coonect.com.br'>contato@coonect.com.br</a>",
     subtitle: "Resposta em até 24h"
   },
   {
@@ -231,10 +231,11 @@ function populateSolutions() {
               </li>
             `).join('')}
           </ul>
-          
+          <a href="#contato">
           <button class="w-full mt-4 border border-orange-500 text-orange-600 hover:bg-orange-500 hover:text-white transition-colors px-4 py-2 rounded-md font-medium">
             ${solution.ctaText}
           </button>
+          </a> 
         </div>
       </div>
     </div>
