@@ -16,8 +16,8 @@ try {
     $mail->isSMTP();
     $mail->Host       = 'smtp.gmail.com'; // Servidor SMTP do Gmail
     $mail->SMTPAuth   = true;
-    $mail->Username   = 'mauricio@coonect.com.br'; // Seu e-mail
-    $mail->Password   = 'M@uricio1988'; // Sua senha de aplicativo do Gmail
+    $mail->Username   = 'mauricioafcoproscki@gmail.com'; // Seu e-mail
+    $mail->Password   = 'bewxbareyeehbbyq'; // Sua senha de aplicativo do Gmail
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port       = 587;
     $mail->CharSet    = 'UTF-8';
@@ -26,7 +26,7 @@ try {
     $mail->SMTPDebug = 0; // Habilita debug detalhado
 
     // Remetente e destinatário
-    $mail->setFrom('mauricio@coonect.com.br', 'Site Coonect');
+    $mail->setFrom('mauricioafcoproscki@gmail.com', 'Site Coonect');
     $mail->addAddress('contato@coonect.com.br'); // Vai para você
 
     // Conteúdo
