@@ -11,15 +11,15 @@ $mail = new PHPMailer(true);
 try {
     // Configurações do servidor
     $mail->isSMTP();
-    $mail->Host       = 'smtp.hostinger.com'; // Servidor SMTP da Hostinger (ou seu)
+    $mail->Host       = 'smtp.google.com'; // Servidor SMTP da Hostinger (ou seu)
     $mail->SMTPAuth   = true;
-    $mail->Username   = 'contato@coonect.com.br'; // Seu e-mail
-    $mail->Password   = 'SENHA_DO_EMAIL'; // Sua senha do e-mail
+    $mail->Username   = 'mauricio@coonect.com.br'; // Seu e-mail
+    $mail->Password   = 'M@uricio1988'; // Sua senha do e-mail
     $mail->SMTPSecure = 'tls';
     $mail->Port       = 587;
 
     // Remetente e destinatário
-    $mail->setFrom('contato@coonect.com.br', 'Site Coonect');
+    $mail->setFrom('mauricio@coonect.com.br', 'Site Coonect');
     $mail->addAddress('contato@coonect.com.br'); // Vai para você
 
     // Conteúdo
