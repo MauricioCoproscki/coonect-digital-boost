@@ -1,78 +1,49 @@
 <?php
-// Enable error reporting for debugging (remove in production)
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
-// Set headers to handle JSON response
-header('Content-Type: application/json');
+require 'PHPMailer/src/Exception.php';
+require 'PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
 
-// Function to sanitize input
-function sanitize_input($data) {
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-}
+$mail = new PHPMailer(true);
 
-// Check if the request method is POST
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get and sanitize form data
-    $nome = isset($_POST['nome']) ? sanitize_input($_POST['nome']) : '';
-    $empresa = isset($_POST['empresa']) ? sanitize_input($_POST['empresa']) : '';
-    $email = isset($_POST['email']) ? sanitize_input($_POST['email']) : '';
-    $telefone = isset($_POST['telefone']) ? sanitize_input($_POST['telefone']) : '';
-    $mensagem = isset($_POST['mensagem']) ? sanitize_input($_POST['mensagem']) : '';
+try {
+    // Configurações do servidor
+    $mail->isSMTP();
+    $mail->Host       = 'smtp.hostinger.com'; // Servidor SMTP da Hostinger (ou seu)
+    $mail->SMTPAuth   = true;
+    $mail->Username   = 'contato@coonect.com.br'; // Seu e-mail
+    $mail->Password   = 'SENHA_DO_EMAIL'; // Sua senha do e-mail
+    $mail->SMTPSecure = 'tls';
+    $mail->Port       = 587;
 
-    // Validate required fields
-    if (empty($nome) || empty($empresa) || empty($email) || empty($telefone)) {
-        echo json_encode([
-            'success' => false,
-            'message' => 'Por favor, preencha todos os campos obrigatórios.'
-        ]);
-        exit;
-    }
+    // Remetente e destinatário
+    $mail->setFrom('contato@coonect.com.br', 'Site Coonect');
+    $mail->addAddress('contato@coonect.com.br'); // Vai para você
 
-    // Validate email format
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo json_encode([
-            'success' => false,
-            'message' => 'Por favor, insira um endereço de e-mail válido.'
-        ]);
-        exit;
-    }
+    // Conteúdo
+    $mail->isHTML(true);
+    $mail->Subject = 'Novo contato via formulário';
+    $mail->Body    = "
+        <strong>Nome:</strong> {$_POST['nome']}<br>
+        <strong>Empresa:</strong> {$_POST['empresa']}<br>
+        <strong>Email:</strong> {$_POST['email']}<br>
+        <strong>Telefone:</strong> {$_POST['telefone']}<br>
+        <strong>Mensagem:</strong> {$_POST['mensagem']}
+    ";
 
-    // Prepare email content
-    $to = 'contato@coonect.com.br';
-    $subject = 'Novo contato via formulário - ' . $empresa;
-    
-    $email_content = "Nome: $nome\n";
-    $email_content .= "Empresa: $empresa\n";
-    $email_content .= "E-mail: $email\n";
-    $email_content .= "Telefone: $telefone\n\n";
-    $email_content .= "Mensagem:\n$mensagem\n";
+    $mail->AltBody = "Nome: {$_POST['nome']}\nEmpresa: {$_POST['empresa']}\nEmail: {$_POST['email']}\nTelefone: {$_POST['telefone']}\nMensagem: {$_POST['mensagem']}";
 
-    // Set email headers
-    $headers = "From: $email\r\n";
-    $headers .= "Reply-To: $email\r\n";
-    $headers .= "X-Mailer: PHP/" . phpversion();
-
-    // Send email
-    if (mail($to, $subject, $email_content, $headers)) {
-        echo json_encode([
-            'success' => true,
-            'message' => 'Mensagem enviada com sucesso! Entraremos em contato em breve.'
-        ]);
-    } else {
-        echo json_encode([
-            'success' => false,
-            'message' => 'Desculpe, ocorreu um erro ao enviar sua mensagem. Por favor, tente novamente mais tarde.'
-        ]);
-    }
-} else {
-    // If not POST request
+    $mail->send();
+    echo json_encode([
+        'success' => true,
+        'message' => 'Mensagem enviada com sucesso!'
+    ]);
+} catch (Exception $e) {
     echo json_encode([
         'success' => false,
-        'message' => 'Método de requisição inválido.'
+        'message' => "Erro ao enviar mensagem: {$mail->ErrorInfo}"
     ]);
 }
-?> 
+?>
